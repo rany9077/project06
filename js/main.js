@@ -108,20 +108,44 @@ const searchTextFieldEl = document.querySelector("header .textfield");
 const searchCancelEl = document.querySelector("header .search-canceler");
 searchTextFieldEl.addEventListener("click", function () {
   headerEl.classList.add("searching--mobile");
-  searchInputEl.focus()
+  searchInputEl.focus();
 });
 searchCancelEl.addEventListener("click", function () {
   headerEl.classList.remove("searching--mobile");
 });
 
-// 모바일 검색창 삭제
-window.addEventListener('resize',function(){
-  if(this.window.innerWidth <= 740){
-    headerEl.classList.remove('searching')
+// 데스크탑 -> 모바일 검색창 삭제
+window.addEventListener("resize", function () {
+  if (this.window.innerWidth <= 740) {
+    headerEl.classList.remove("searching");
   } else {
-    headerEl.classList.remove('searching--mobile')
+    headerEl.classList.remove("searching--mobile");
   }
-})
+});
+
+// 모바일 menu-toggler
+const navEl = document.querySelector("nav");
+const navMenuToggleEl = navEl.querySelector(".menu-toggler");
+const navMenuShadow = navEl.querySelector(".shadow");
+
+navMenuToggleEl.addEventListener("click", function () {
+  if (navEl.classList.contains("menuing")) {
+    hideNavMenu();
+  } else {
+    showNavMenu();
+  }
+});
+navEl.addEventListener("click", function (event) {
+  event.stopPropagation();
+});
+navMenuShadow.addEventListener("click", hideNavMenu);
+window.addEventListener("click", hideNavMenu);
+function showNavMenu() {
+  navEl.classList.add("menuing");
+}
+function hideNavMenu() {
+  navEl.classList.remove("menuing");
+}
 
 // 요소의 가시성 관찰
 const io = new IntersectionObserver(function (entries) {
